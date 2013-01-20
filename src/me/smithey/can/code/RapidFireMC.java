@@ -1,22 +1,21 @@
 /*
  * Add command to give tokens
  * Add a top list with the most tokens
- * Add a across plugin api to allow use of add tokens and Take tokens
  * Add Take tokens public void
  * Add Admin Commands
  * Wipe account command
  * 
- * Add Check other users tokens
  * 
  * */
 package me.smithey.can.code;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.logging.Logger;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import code.husky.TokenAPI;
@@ -57,12 +56,18 @@ public class RapidFireMC extends JavaPlugin {
 				p.sendMessage(ChatColor.AQUA + "/Arcade join " + ChatColor.WHITE + "- Allows you to join a game");
 				p.sendMessage(ChatColor.AQUA + "/Arcade leave " + ChatColor.WHITE + "- Leaves the current game you are in");
 				p.sendMessage(ChatColor.AQUA + "/Arcade Admin " + ChatColor.WHITE + "- Displays Help for Players with the Admin Permission");
-				p.sendMessage(ChatColor.RED + "                           " + ChatColor.DARK_RED + "Made by Smithey");
+				p.sendMessage(ChatColor.RED + "                 " + ChatColor.DARK_RED + "Made by Smithey & Husky");
 				p.sendMessage(ChatColor.RED + "====================================================");
 			}
 		}else if(cmd.getName().equalsIgnoreCase("tokens") || cmd.getName().equalsIgnoreCase("token")){
 			if(args.length == 0) {
-				p.sendMessage(ChatColor.GREEN + "You have " + api.getTokens(p) + " tokens!");
+				DecimalFormat df = new DecimalFormat();
+				DecimalFormatSymbols dfs = new DecimalFormatSymbols();
+				dfs.setGroupingSeparator(',');
+
+				df.setDecimalFormatSymbols(dfs);
+				String tokens = df.format(api.getTokens(p));
+				p.sendMessage(ChatColor.GREEN + "You have " + ChatColor.RED + tokens + ChatColor.GREEN + " tokens!");
 			}else if(args[0].equalsIgnoreCase("help")){
 				p.sendMessage(ChatColor.RED + "===================== " + ChatColor.GREEN + "Tokens" + ChatColor.RED + " =====================");
 				p.sendMessage(ChatColor.AQUA + "/Tokens " + ChatColor.WHITE + "- Views your Token balance");
@@ -74,7 +79,7 @@ public class RapidFireMC extends JavaPlugin {
 				p.sendMessage(ChatColor.RED + "====================================================");
 			}else if(args[0].equalsIgnoreCase("about")){
 				p.sendMessage(ChatColor.RED + "===================== " + ChatColor.GREEN + "Tokens" + ChatColor.RED + " =====================");
-				p.sendMessage(ChatColor.WHITE + "Tokens are the currency on the server, they are used to play games and when you win games you will recieve tokens. Some games require more or less tokens than others. You can gain toeksn on our website by purchasing them or you can trade tokens with other players. Use /tokens to view your toekn balance.");
+				p.sendMessage(ChatColor.WHITE + "Tokens are the currency on the server, they are used to play games and when you win games you will recieve tokens. Some games require more or less tokens than others. You can gain tokens on our website by purchasing them or you can trade tokens with other players. Use /tokens to view your tokens balance.");
 				p.sendMessage(ChatColor.RED + "                           " + ChatColor.DARK_RED + "Made by Smithey");
 				p.sendMessage(ChatColor.RED + "====================================================");
 			}else if(args[0].equalsIgnoreCase("add")){
@@ -98,7 +103,13 @@ public class RapidFireMC extends JavaPlugin {
 				}
 			} else {
 				Player to = getServer().getPlayer(args[0]);
-				p.sendMessage(ChatColor.GREEN + args[0] + " has " + api.getTokens(to) + "!");
+				DecimalFormat df = new DecimalFormat();
+				DecimalFormatSymbols dfs = new DecimalFormatSymbols();
+				dfs.setGroupingSeparator(',');
+
+				df.setDecimalFormatSymbols(dfs);
+				String tokens = df.format(api.getTokens(to));
+				p.sendMessage(ChatColor.DARK_RED + args[0] + ChatColor.GREEN + " has " + ChatColor.RED + tokens + ChatColor.GREEN + "tokens!");
 			}
 		}
 		return true;

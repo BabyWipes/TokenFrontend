@@ -1,7 +1,7 @@
-name: MineCadeCraft
+name: TokenFrontEnd
 main: me.smithey.can.code.RapidFireMC
 version: 1.0
-description: Arcade Plugin
+description: Tokens Frontend User Interface Plugin
 author: Smithey
 commands:
     Arcade:
