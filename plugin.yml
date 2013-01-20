@@ -1,0 +1,10 @@
+name: MineCadeCraft
+main: me.smithey.can.code.RapidFireMC
+version: 1.0
+description: Arcade Plugin
+author: Smithey
+commands:
+    Arcade:
+        description: Main Arcade Command
+    Tokens:
+        description: Tokens Command
